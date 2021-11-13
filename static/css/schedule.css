@@ -1,0 +1,43 @@
+body {
+  font-family: sans-serif;
+  width: 50%;
+  margin: auto;
+}
+
+img {
+  width: 80%;
+  height: 100%;
+}
+
+.card {
+  box-shadow: 10px 10px 5px 0px rgba(238, 238, 238, 1);
+  margin: 15px;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.navbar-right {
+  font-family: verdana;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: #000000;
+  background: #5e645d;
+  width: 100%;
+}
+
+.navbar-right a {
+  font-family: verdana;
+  float: left;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+  width: 5%;
+}
+
+.navbar-right a:hover {
+  background-color: #42a1f5;
+  color: white;
+}

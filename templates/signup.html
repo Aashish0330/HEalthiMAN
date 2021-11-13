@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup HLM</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='./css/style.css') }}"
+    />
+  </head>
+  <body>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <script>
+      var messages = "{{ messages | safe }}";
+      alert(messages);
+    </script>
+    {% endif %} {% endwith %}
+    <section>
+      <div class="container">
+        <div class="user signinBx">
+          <div class="formBx">
+            <form method="POST" action="/signup">
+              <h2>Create an Account</h2>
+              <input type="text" name="name" placeholder="Username" id="name" />
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                id="email"
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Create Password"
+                id=""
+              />
+              <input
+                type="password"
+                name="confpassword"
+                placeholder="Confirm Password"
+                id=""
+              />
+              <input type="submit" value="Sign Up" />
+              <p class="signup">
+                Already have an Account?<a
+                  href="/login"
+                  onclick="javascript:doToggle();"
+                  >Sign In</a
+                >
+              </p>
+            </form>
+          </div>
+          <div class="imgBx">
+            <img
+              src="{{ url_for('static', filename='./images/signup.jpg') }}"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <script type="text/javascript">
+      function doToggle() {
+        var container = document.querySelector(".container");
+        container.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

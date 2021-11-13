@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HLM</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='./css/style.css') }}"
+    />
+  </head>
+  <body>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <script>
+      var messages = "{{ messages | safe }}";
+      alert(messages);
+    </script>
+    {% endif %} {% endwith %}
+    <section>
+      <div class="container">
+        <div class="user signinBx">
+          <div class="imgBx">
+            <img
+              src="{{ url_for('static', filename='./images/loginpage.jpg') }}"
+              alt=""
+            />
+          </div>
+          <div class="formBx">
+            <form method="POST" action="/login">
+              <h2>Sign In</h2>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                id="email"
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                id="password"
+              />
+              <input type="submit" value="Login" />
+              <p class="signup">
+                don't have an account ?
+                <a href="/signup" onclick="javascript:doToggle();">Sign Up</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script type="text/javascript">
+      function doToggle() {
+        var container = document.querySelector(".container");
+        container.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>
