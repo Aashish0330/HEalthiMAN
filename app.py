@@ -29,14 +29,17 @@ auth = Blueprint('auth', __name__)
 main = Blueprint('main', __name__)
 
 db.init_app(app)
-    
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
-app.register_blueprint(auth)
-app.register_blueprint(main)
-db.create_all()
+with app.app_context():
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    app.register_blueprint(auth)
+    app.register_blueprint(main)
+    
+    db.create_all()
 
 class History(UserMixin, db.Model):
    
