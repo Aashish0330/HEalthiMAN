@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Blueprint, Flask, render_template, request, jsonify, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from newsapi.newsapi_client import NewsApiClient
+from newsapi import NewsApiClient
 from pusher import Pusher
 from .models import User,History
 from . import db
