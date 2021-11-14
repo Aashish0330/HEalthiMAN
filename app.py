@@ -23,11 +23,8 @@ app.config["DISCORD_CLIENT_ID"] = os.environ.get("DISCORD_CLIENT_ID")
 app.config["DISCORD_CLIENT_SECRET"] = os.environ.get("DISCORD_CLIENT_SECRET")            
 
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
+login_manager.login_view = 'app.login'
 login_manager.init_app(app)
-
-auth = Blueprint('auth', __name__)
-main = Blueprint('main', __name__)
 
 db.init_app(app)
 
@@ -37,9 +34,6 @@ with app.app_context():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    app.register_blueprint(auth)
-    app.register_blueprint(main)
-    
     db.create_all()
 
 class History(UserMixin, db.Model):
@@ -77,26 +71,26 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User %r>' % self.email
 
-@auth.route('/login')
+@app.route('/login')
 def login():
     return render_template('index.html')
 
-@auth.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
     user = User.query.filter_by(email = email).first()
     if not user or not check_password_hash(user.password, password): 
         flash('Please check your login details and try again.')
-        return redirect(url_for('auth.login')) 
+        return redirect(url_for('app.login')) 
     login_user(user)
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('app.profile'))
 
-@auth.route('/signup')
+@app.route('/signup')
 def signup():
     return render_template('signup.html')
 
-@auth.route('/signup', methods = ['POST'])
+@app.route('/signup', methods = ['POST'])
 def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
@@ -105,20 +99,20 @@ def signup_post():
     user = User.query.filter_by(email = email).first()
     if user:   
         flash('Email address already exists')
-        return redirect(url_for('auth.signup'))
+        return redirect(url_for('app.signup'))
     if password != confirm_password:
         flash('Password does not match!')
-        return redirect(url_for('auth.signup'))
+        return redirect(url_for('app.signup'))
     new_user = User(email = email, name = name, password = generate_password_hash(password, method = 'sha256'))
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('app.login'))
 
-@auth.route('/logout')
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('app.index'))
 
 pusher = Pusher(
       app_id = os.environ.get("PUSHER_ID"),
@@ -128,11 +122,12 @@ pusher = Pusher(
       ssl = True
     )
 
-@main.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index')
 def index():
     return render_template('index.html')
 
-@main.route('/profile')
+@app.route('/profile')
 @login_required
 def profile():
     newsapi_client = NewsApiClient(api_key = os.environ.get("NEWSAPI_APIKEY"))
@@ -146,7 +141,7 @@ def profile():
                          "author": article["author"]})
     return render_template('profile.html', name = current_user.name, feed = newsData[:4])
 
-@main.route('/news')
+@app.route('/news')
 @login_required
 def news():
     newsapi_client = NewsApiClient(api_key = os.environ.get("NEWSAPI_APIKEY"))
@@ -156,49 +151,49 @@ def news():
         newsData.append({"title" : article["title"], "url": article["url"], "urlToImage" : article["urlToImage"]})
     return render_template('news.html', name = current_user.name, feed = newsData[:20])
 
-@main.route('/community')
+@app.route('/community')
 @login_required
 def community():
     return render_template('community.html')
 
-@main.route('/team')
+@app.route('/team')
 @login_required
 def team():
     return render_template('team.html')
 
-@main.route('/blog')
+@app.route('/blog')
 @login_required
 def blog():
     return render_template('blog.html')
 
-@main.route('/personal')
+@app.route('/personal')
 @login_required
 def personal():
     email = current_user.email
     history = User.query.filter_by(email = email).first().post
     return render_template('personal.html', history = history)
 
-@main.route('/planner')
+@app.route('/planner')
 @login_required
 def planner():
     mealplan = current_user.mealplan
     return render_template('diet.html', mealplan=json.loads(mealplan))
 
-@main.route('/about')
+@app.route('/about')
 @login_required
 def about():
     email = current_user.email
     user = User.query.filter_by(email = email).first()
     return render_template('about.html', user = user)
 
-@main.route("/updateprof")
+@app.route("/updateprof")
 @login_required
 def updateProfile():
     email = current_user.email
     user = User.query.filter_by(email = email).first()
     return render_template("update_profile.html", user_det = user)
 
-@main.route("/updatedb", methods=["POST"])
+@app.route("/updatedb", methods=["POST"])
 @login_required
 def updateDb():
     email = current_user.email
@@ -239,9 +234,9 @@ def updateDb():
     calories = calories,
     mealplan = mealplan))
     db.session.commit()
-    return redirect(url_for("main.about"))
+    return redirect(url_for("app.about"))
     
-@main.route('/post', methods=['POST'])
+@app.route('/post', methods=['POST'])
 @login_required
 def addPost():
     data = {
@@ -267,7 +262,7 @@ def addPost():
     db.session.commit()
     return jsonify(data)
 
-@main.route('/post/<id>', methods=['PUT','DELETE'])
+@app.route('/post/<id>', methods=['PUT','DELETE'])
 @login_required
 def updatePost(id):
     data = { 'id': id }
