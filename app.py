@@ -2,7 +2,7 @@ import os
 import uuid
 import json
 import requests
-from .models import User,History
+from models import User,History
 from pusher import Pusher
 from operator import methodcaller
 from flask_sqlalchemy import SQLAlchemy
