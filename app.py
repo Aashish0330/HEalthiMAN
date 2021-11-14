@@ -2,7 +2,6 @@ import os
 import uuid
 import json
 import requests
-from . import db
 from .models import User,History
 from pusher import Pusher
 from operator import methodcaller
