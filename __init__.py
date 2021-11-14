@@ -4,7 +4,7 @@ from flask_login import LoginManager
 import os
 
 db = SQLAlchemy()
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
     
 def create_app():
 
