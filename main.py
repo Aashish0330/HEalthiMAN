@@ -1,3 +1,4 @@
+from operator import methodcaller
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Blueprint, Flask, render_template, request, jsonify, redirect, url_for, request, flash
 from flask_login import login_required, current_user
@@ -20,7 +21,7 @@ pusher = Pusher(
       ssl = os.environ.get("PUSHER_SSL")
     )
 
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
 
