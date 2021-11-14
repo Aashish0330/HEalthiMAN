@@ -82,9 +82,9 @@ def login_post():
     user = User.query.filter_by(email = email).first()
     if not user or not check_password_hash(user.password, password): 
         flash('Please check your login details and try again.')
-        return redirect(url_for('app.login')) 
+        return redirect(url_for('login')) 
     login_user(user)
-    return redirect(url_for('app.profile'))
+    return redirect(url_for('profile'))
 
 @app.route('/signup')
 def signup():
@@ -99,20 +99,20 @@ def signup_post():
     user = User.query.filter_by(email = email).first()
     if user:   
         flash('Email address already exists')
-        return redirect(url_for('app.signup'))
+        return redirect(url_for('signup'))
     if password != confirm_password:
         flash('Password does not match!')
-        return redirect(url_for('app.signup'))
+        return redirect(url_for('signup'))
     new_user = User(email = email, name = name, password = generate_password_hash(password, method = 'sha256'))
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for('app.login'))
+    return redirect(url_for('login'))
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('app.index'))
+    return redirect(url_for('index'))
 
 pusher = Pusher(
       app_id = os.environ.get("PUSHER_ID"),
