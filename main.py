@@ -22,7 +22,7 @@ pusher = Pusher(
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('https://healthiman.herokuapp.com/')
 
 @main.route('/profile')
 @login_required
