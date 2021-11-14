@@ -14,6 +14,7 @@ from flask import Blueprint, Flask, render_template, request, jsonify, redirect,
 
 db = SQLAlchemy()
 app = Flask(__name__, template_folder='templates')
+
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = os.environ.get("OAUTHLIB_INSECURE_TRANSPORT")
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQL_DB_URL")
@@ -277,3 +278,6 @@ def updatePost(id):
         data['event_name'] = 'deactivated'
         pusher.trigger("blog", "post-deactivated", data)
     return jsonify(data)
+
+if __name__ == "__main__":
+    app.run(port=5000)
