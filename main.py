@@ -27,8 +27,8 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    newsapi = NewsApiClient(api_key = os.environ.get("NEWSAPI_APIKEY"))
-    top_headlines = newsapi.get_top_headlines(q = os.environ.get("NEWS_Q"), category = os.environ.get("NEWS_CAT"))
+    newsapi_client = NewsApiClient(api_key = os.environ.get("NEWSAPI_APIKEY"))
+    top_headlines = newsapi_client.get_top_headlines(q = os.environ.get("NEWS_Q"), category = os.environ.get("NEWS_CAT"))
     newsData = []
     for article in top_headlines["articles"]:
         newsData.append({"title" : article["title"],
@@ -42,8 +42,8 @@ def profile():
 @main.route('/news')
 @login_required
 def news():
-    newsapi = NewsApiClient(api_key = os.environ.get("NEWSAPI_APIKEY"))
-    top_headlines = newsapi.get_top_headlines(q = os.environ.get("NEWS_Q"),category = os.environ.get("NEWS_CAT"))
+    newsapi_client = NewsApiClient(api_key = os.environ.get("NEWSAPI_APIKEY"))
+    top_headlines = newsapi_client.get_top_headlines(q = os.environ.get("NEWS_Q"),category = os.environ.get("NEWS_CAT"))
     newsData = []
     for article in top_headlines["articles"]:
         newsData.append({"title" : article["title"], "url": article["url"], "urlToImage" : article["urlToImage"]})
