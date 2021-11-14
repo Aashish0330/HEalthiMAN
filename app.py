@@ -17,7 +17,7 @@ app = Flask(__name__, template_folder='templates')
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = os.environ.get("OAUTHLIB_INSECURE_TRANSPORT")
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQL_DB_URL")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = os.environ.get("SQL_TRACK")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["DISCORD_CLIENT_ID"] = os.environ.get("DISCORD_CLIENT_ID")
 app.config["DISCORD_CLIENT_SECRET"] = os.environ.get("DISCORD_CLIENT_SECRET")            
 
@@ -124,7 +124,7 @@ pusher = Pusher(
       key = os.environ.get("PUSHER_KEY"),
       secret = os.environ.get("PUSHER_SECRET"),
       cluster = os.environ.get("PUSHER_CLUSTER"),  
-      ssl = os.environ.get("PUSHER_SSL")
+      ssl = True
     )
 
 @main.route('/', methods=['GET', 'POST'])
