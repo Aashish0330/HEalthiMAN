@@ -1,6 +1,6 @@
 # HEalthiMAN
 
-Considering the ongoing COVID-19 pandemic people have been living in their houses for months with minimal contact with the outside world. Deteriorating mental and physicalhealth is prevalent in today’s society and people themselves are not giving enough importance to their health anymore. The aim of this web application is to help improve the person’s lifestyle by motivating them to be physically and mentally healthy. The productis targeted towards anyone who needs help or want to improve their lifestyle.
+Considering the ongoing COVID-19 pandemic people have been living in their houses for months with minimal contact with the outside world. Deteriorating mental and physical health is prevalent in today’s society and people themselves are not giving enough importance to their health anymore. The aim of this web application is to help improve the person’s lifestyle by motivating them to be physically and mentally healthy. The productis targeted towards anyone who needs help or want to improve their lifestyle.
 
 This repository contains the source code for the **HE**althi**MAN** webapp developed using flask framework and written in python. The web app is deployed on Heroku web server and you can access it [here] (https://healthiman.herokuapp.com/)
 
