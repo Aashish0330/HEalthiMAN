@@ -4,10 +4,10 @@ from flask_login import LoginManager
 import os
 
 db = SQLAlchemy()
-
+app = Flask(__name__)
+    
 def create_app():
 
-    app = Flask(__name__)
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = os.environ.get("OAUTHLIB_INSECURE_TRANSPORT")
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQL_DB_URL")
