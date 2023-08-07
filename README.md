@@ -58,4 +58,4 @@ This is a list of things you need to do to use the software
 ### Team Members:
 
 - [Prasannakumaran D](https://github.com/PrasannaKumaran)
-- [Sai Ashish Porukuri](https://github.com/Aashish0330)
+- [Sai Ashish Pokuri](https://github.com/Aashish0330)
